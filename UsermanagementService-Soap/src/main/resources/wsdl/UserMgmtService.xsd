@@ -1,0 +1,49 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://usermanagementservice.com/usermanagement"
+	version="1.0" 
+	xmlns:tns="http://usermanagementservice.com/usermanagement">
+	<xsd:element name="User">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="firstName" type="xsd:string" />
+				<xsd:element name="lastName" type="xsd:string" />
+				<xsd:element name="age" type="xsd:int" />
+				<xsd:element name="ssn" type="xsd:string" />
+				<xsd:element name="phone" type="xsd:string" />
+				<xsd:element name="address" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Profile">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="userName" type="xsd:string" />
+				<xsd:element name="password" type="xsd:string" />
+				<xsd:element name="email" type="xsd:string" />
+				<xsd:element name="secQuest" type="xsd:string" />
+				<xsd:element name="secAns" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="UserSPI">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="ssn" type="xsd:string" />
+				<xsd:element name="password" type="xsd:string" />
+				<xsd:element name="address" type="xsd:string" />
+				<xsd:element name="phone" type="xsd:string" />
+				<xsd:element name="secAns" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="UserNPI">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="firstName" type="xsd:string" />
+				<xsd:element name="lastName" type="xsd:string" />
+				<xsd:element name="age" type="xsd:int" />
+				<xsd:element name="secQuest" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

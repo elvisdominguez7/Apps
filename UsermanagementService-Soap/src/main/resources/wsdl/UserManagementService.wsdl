@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="UserManagementService"
+	xmlns:tns="http://www.usermanagement.com"
+	targetNamespace="http://www.usermanagement.com"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<wsdl:types>
+		<schema targetNamespace="http://www.usermanagement.com" xmlns="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="http://www.usermanagement.com" elementFormDefault="qualified"
+			attributeFormDefault="unqualified" version="1.0">
+			<xsd:element name="registerUserRequest" type="tns:User" />
+			<xsd:element name="retrieveUserRequest" type="tns:UserId" />
+			<xsd:element name="retrieveUserResponse" type="tns:User" />
+			<xsd:element name="deleteUserRequest" type="tns:UserId" />
+			<xsd:element name="updateUserRequest" type="tns:User" />
+			<xsd:element name="errorDetails" type="tns:ErrorDetails" />
+			
+			<xsd:complexType name="UserId">
+				<xsd:sequence>
+					<element name="userID" type="xsd:long" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="User">
+				<xsd:sequence>
+					<element name="userID" type="xsd:long" />
+					<element name="firstName" type="xsd:string" />
+					<element name="lastName" type="xsd:string" />
+					<element name="age" type="xsd:int" />
+					<element name="ssn" type="xsd:string" />
+					<element name="phone" type="xsd:string" />
+					<element name="address" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ErrorDetails">
+				<xsd:sequence>
+					<element name="message" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="registerUserRequest">
+		<wsdl:part element="tns:registerUserRequest" name="user" />
+	</wsdl:message>
+	<wsdl:message name="retrieveUserRequest">
+		<wsdl:part element="tns:retrieveUserRequest" name="id" />
+	</wsdl:message>
+	<wsdl:message name="retrieveUserResponse">
+		<wsdl:part element="tns:retrieveUserResponse" name="user" />
+	</wsdl:message>
+	<wsdl:message name="updateUserRequest">
+		<wsdl:part element="tns:updateUserRequest" name="user" />
+	</wsdl:message>
+	<wsdl:message name="deleteUserRequest">
+		<wsdl:part element="tns:deleteUserRequest" name="id" />
+	</wsdl:message>
+	<wsdl:message name="UserExistFault">
+		<wsdl:part element="tns:errorDetails" name="userExistFaultDetails" />
+	</wsdl:message>
+	<wsdl:message name="UserNotFoundFault">
+		<wsdl:part element="tns:errorDetails" name="userNotFoundFaultDetails" />
+	</wsdl:message>
+
+	<wsdl:portType name="UserManagementService">
+		<wsdl:operation name="registerUser">
+			<wsdl:input name="User" message="tns:registerUserRequest" />
+			<wsdl:fault name="UserExistFault" message="tns:UserExistFault" />
+			<wsdl:fault name="UserNotFoundFault" message="tns:UserNotFoundFault" />
+		</wsdl:operation>
+		<wsdl:operation name="retrieveUser">
+			<wsdl:input name="UserId" message="tns:retrieveUserRequest" />
+			<wsdl:output name="User" message="tns:retrieveUserResponse" />
+			<wsdl:fault name="UserExistFault" message="tns:UserExistFault" />
+			<wsdl:fault name="UserNotFoundFault" message="tns:UserNotFoundFault" />
+		</wsdl:operation>
+		<wsdl:operation name="updateUser">
+			<wsdl:input name="User" message="tns:updateUserRequest" />
+			<wsdl:fault name="UserExistFault" message="tns:UserExistFault" />
+			<wsdl:fault name="UserNotFoundFault" message="tns:UserNotFoundFault" />
+		</wsdl:operation>
+		<wsdl:operation name="deleteUser">
+			<wsdl:input name="User" message="tns:deleteUserRequest" />
+			<wsdl:fault name="UserExistFault" message="tns:UserExistFault" />
+			<wsdl:fault name="UserNotFoundFault" message="tns:UserNotFoundFault" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="UserManagementServiceBinding" type="tns:UserManagementService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="registerUser">
+			<soap:operation
+				soapAction="http://localhost:8080/UserManagementService/registerUser"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:fault name="UserExistFault">
+				<soap:body use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="UserNotFoundFault">
+				<soap:body use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="retrieveUser">
+			<soap:operation
+				soapAction="http://localhost:8080/UserManagementService/retrieveUser"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="UserExistFault">
+				<soap:body use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="UserNotFoundFault">
+				<soap:body use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="updateUser">
+			<soap:operation
+				soapAction="http://localhost:8080/UserManagementService/updateUser"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:fault name="UserExistFault">
+				<soap:body use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="UserNotFoundFault">
+				<soap:body use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="deleteUser">
+			<soap:operation
+				soapAction="http://localhost:8080/UserManagementService/deleteUser"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:fault name="UserExistFault">
+				<soap:body use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="UserNotFoundFault">
+				<soap:body use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="UserManagementService">
+		<wsdl:port name="UserManagementServicePort" binding="tns:UserManagementServiceBinding">
+			<soap:address
+				location="http://localhost:8080/UserManagementService/services/UserManagementService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
