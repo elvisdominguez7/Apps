@@ -2,8 +2,6 @@ package org.edominguez.usermanagement.model;
 
 
 import org.springframework.hateoas.ResourceSupport;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -18,7 +18,7 @@ public class DataSourceConfig {
     @ConfigurationProperties(prefix="spring.datasource")
     public DataSource dataSource() {
         return DataSourceBuilder.create()
-            .url("jdbc:postgresql://localhost:5432/postgres")
+            .url("jdbc:postgresql://localhost:5432/usermanagement")
             .username("postgres")
             .password("postgres1234")
             .build();

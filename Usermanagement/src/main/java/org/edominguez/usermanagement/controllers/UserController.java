@@ -11,8 +11,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
@@ -39,7 +37,8 @@ import static org.edominguez.usermanagement.constant.ErrorFault.NO_USER_FOUND;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/Usermanagement")
+@Api(basePath = "/Usermanagement", tags = "UserManagementService", description = "Controller API for records functionalities")
 public class UserController {
 	
 	@Autowired
@@ -47,6 +46,7 @@ public class UserController {
 
 	@PostMapping(value = "/user")
 	@PreAuthorize("hasRole('Apps') or hasRole('Testers') ")
+	@ApiOperation(value = "Creates a new User Record.", notes = "Remove UserId it will be Auto generated from DB")
 	public ResponseEntity<Object> createStudent(@RequestBody User user) {
 		User savedUser = ((CrudRepository<User, Long>) repo).save(user);
 
@@ -60,6 +60,7 @@ public class UserController {
 	@GetMapping(value = "{id}")
 	@PreAuthorize("hasRole('Apps') or hasRole('Testers') ")
 	@ApiOperation(value = "Retrieves a User Record by the specified id.", notes = "Id is required.", response = User.class)
+	@ApiImplicitParam(name = "id", required = true, dataType = "long", paramType = "path", value = "User's Primary Key")
 	@ResponseBody
 	public User retrieveUser(@PathVariable long id)
 			throws UserNotFoundException, InvalidInputException, InvoiceNotFoundException {
@@ -72,8 +73,10 @@ public class UserController {
 
 	}
 
-	@GetMapping(value = "/all")
+	@SuppressWarnings("unchecked")
+	@GetMapping(value = "/users")
 	@PreAuthorize("hasRole('Apps') or hasRole('Testers') ")
+	@ApiOperation(value = "Retrieves all Users.", response = List.class)
 	@ResponseBody
 	public List<User> retrieveAllStudents() {
 		return ((JpaRepository<User, Long>) repo).findAll();
@@ -81,8 +84,9 @@ public class UserController {
 
 
 
-	@PutMapping(value = "user")
+	@PutMapping(value = "/user")
 	@PreAuthorize("hasRole('Apps') or hasRole('Testers') ")
+	@ApiOperation(value = "Updates a User record.")
 	@ResponseBody
 	public ResponseEntity<Object> updateUser(@RequestBody User user, @PathVariable long id) {
 
@@ -98,7 +102,7 @@ public class UserController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@DeleteMapping(value = "{id}")
+	@DeleteMapping(value = "/user/{id}")
 	@PreAuthorize("hasRole('Apps') or hasRole('Testers') ")
 	@ResponseBody
 	public void  deleteUser(@PathVariable long id)
